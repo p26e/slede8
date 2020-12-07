@@ -1,0 +1,51 @@
+name: CD
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.release.target_commitish }}
+      
+      - name: Setup Node 🔧
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+          registry-url: https://registry.npmjs.org
+      
+      - name: Configure Git 🧩
+        run: |
+          git config --global user.name "tastefinger"
+          git config --global user.email "71318140+tastefinger@users.noreply.github.com"
+      
+      - name: Version 📌
+        run: npm version ${{ github.event.release.tag_name }}
+
+      - name: Install 📦
+        run: npm ci
+
+      - name: Validate 🧐
+        run: npm run validate
+
+      - name: Test 🚨
+        run: npm test
+
+      - name: Build 🏗️
+        run: npm run build
+
+      - name: Publish 🚀
+        run: npm publish ./lib --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Push 👉
+        run: git push
+        env:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

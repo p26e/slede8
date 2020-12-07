@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+		"declaration": true,
+		"module": "ES2015",
+    "strict": true,
+    "target": "ES2017",
+    "noImplicitReturns": true,
+    "moduleResolution": "node",
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "lib", "**/*.test.ts"]
+}
