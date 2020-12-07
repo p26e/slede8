@@ -1,0 +1,21 @@
+name: Public Mirror
+
+on:
+  push:
+    branches: [ main ]
+ 
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+          ref: 'main'
+      - uses: pstnorge/anonymized-mirror-action@main
+        with:
+          ssh_private_key: ${{ secrets.REMOTE_SSH_PRIVATE_KEY }}
+          destination_git_url: "git@github.com:pstnorge/slede8.git"
+          mirror_branch: "main"
+          anon_name: "tastefinger"
+          anon_email: "71318140+tastefinger@users.noreply.github.com"
