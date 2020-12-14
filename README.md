@@ -201,7 +201,7 @@ Når man er lei av å være på tur kan man returnere til avreiseadressen ved å
 
 #### `FINN <merkelapp | adresse>`
 
-Skriv adressen til merkelappen til r0 og r1. Mest signifikante bit (msb) skrives til r1, og minst signifikante bit (msb) skrives til r0.
+Skriv adressen til merkelappen til r0 og r1. Mest signifikante bit (msb) skrives til r1, og minst signifikante bit (lsb) skrives til r0.
 Hvis addressen er `0xABC` blir dermed `r0` satt til `0xBC` og `r1` til `0x0A`.
 
 #### `LAST rN`
@@ -215,7 +215,7 @@ Skriv verdien i registeret rN til addressen `((r1 << 8) | r0) & 0x0FFF`.
 
 ### Data
 
-Man kan representere `data` ved å skrive linjer formen `^.DATA [x0-9a-fA-F, ]*$`. 
+Man kan representere `data` ved å skrive linjer på formen `^.DATA [x0-9a-fA-F, ]*$`. 
 For å skrive inn data (ev. instruksjonsbytes) bruker man altså ".DATA" etterfulgt av en komma-separert liste med tall. 
 Typisk vil man også putte en `merkelapp` rett før.
 
