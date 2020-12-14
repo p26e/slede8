@@ -53,7 +53,6 @@ Skriv verdien i rB til rA.
 
 Skriv verdien til register `rA`.
 Verdier skrives på formen `0xNN` eller `NN`.
-De mest signifikante bitene (msb) blir skrevet til r1, mens de minst signifikante bitene (msb) blir skrevet til r0.
 
 
 #### `NOPE`
