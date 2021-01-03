@@ -7,7 +7,7 @@ Her kan du mellomlagre data som skal behandles.
 I tillegg benyttes et flagg som representerer resultatet av sammenligningsoperasjoner, og som er bestemmer om programmet skal utføre betingede hopp.
 
 Tilgjengelig minne er 4096 bytes, med adressene `0..4095`.
-Programmer lastes inn fra addresse 0, slik at første instruksjon alltid vil ha addresse 0.
+Programmer lastes inn fra adresse 0, slik at første instruksjon alltid vil ha adresse 0.
 
 SLEDE8 forholder seg til binærdata som little endian.
 
