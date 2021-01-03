@@ -7,7 +7,7 @@ Her kan du mellomlagre data som skal behandles.
 I tillegg benyttes et flagg som representerer resultatet av sammenligningsoperasjoner, og som er bestemmer om programmet skal utføre betingede hopp.
 
 Tilgjengelig minne er 4096 bytes, med adressene `0..4095`.
-Programmer lastes inn fra addresse 0, slik at første instruksjon alltid vil ha addresse 0.
+Programmer lastes inn fra adresse 0, slik at første instruksjon alltid vil ha adresse 0.
 
 SLEDE8 forholder seg til binærdata som little endian.
 
@@ -20,7 +20,7 @@ Blanke linjer blir ignorert.
 
 ### Kommentarer
 
-En `kommentar` begynner tegnet `;`.
+En `kommentar` begynner med tegnet `;`.
 Kommentarer blir ignorert når programmet monteres.
 
 Eksempel ([prøv selv](https://slede8.npst.no#N4Igzg9grgTgxgUwMIQCYJALhAbgAQIB2eA1hALblEAuAhjADqEByA8gAoCie+RethQnzKUa9JgGUAKh3YgANCACWhAA5RqWECAC+QA)):
@@ -33,10 +33,10 @@ NOPE ; en annen kommentar
 ### Merkelapper
 
 En `merkelapp` er en linje på formen `^[0-9a-zA-ZæøåÆØÅ\-_]+:$`.
-Merkelapper er referanser til addressen til den påfølgende instruksjonen eller dataen i koden.
+Merkelapper er referanser til adressen til den påfølgende instruksjonen eller dataen i koden.
 De kan benyttes som argument ved hopp eller hvis man skal ta en tur.
 
-For eksempler, se avsittet om programflyt.
+For eksempler, se avsnittet om programflyt.
 
 
 ### Instruksjoner
@@ -46,7 +46,7 @@ Følgende `instruksjoner` er tilgjengelig:
 
 #### `SETT rA, rB`
 
-Skriv verdien i rB til rA.
+Skriv verdien i `rB` til `rA`.
 
 
 #### `SETT rA, <verdi>`
@@ -128,7 +128,7 @@ STOPP
 
 ### Programflyt
 
-Noen ganger ønsker man å gjøre mer enn å kjøre hver instruksjon én gang fra top til bunn.
+Noen ganger ønsker man å gjøre mer enn å kjøre hver instruksjon én gang fra topp til bunn.
 SLEDE8 dekker dette behovet ved å støtte to typer hopp.
 
 - `HOPP adresse`
@@ -151,7 +151,7 @@ SETT r0, 0 ; r0 = 0
 SETT r1, 1 ; r1 = 1
 
 LIK r0, r1        ; r0 == r1 => flag = 0 (false)
-BHOPP merkelapp01 ; hopper ikke, siden flag = 0
+BHOPP merkelapp01 ; hopper ikke, siden flag == 0
 LIK r0, r0        ; r0 == r0 => flag = 1 (true)
 BHOPP merkelapp01 ; hopp til merkelapp01 siden flag == 1
 STOPP             ; denne instruksjonen blir hoppet over
@@ -184,7 +184,7 @@ Eksempel ([prøv selv](https://slede8.npst.no#N4Igzg9grgTgxgUwMIQCYJALhAbgASpR4D
 
 SETT r0, 0x41  ; r0 = 0x41
 SKRIV r0       ; skriv 0x41 ('A')
-LES r0         ; r0 = 0x41
+LES r0         ; r0 = 0x42
 SKRIV r0       ; skriv 0x42 ('B')
 LES r0         ; r0 = 0x43
 SKRIV r0       ; skriv 0x43 ('C')
@@ -201,21 +201,21 @@ Når man er lei av å være på tur kan man returnere til avreiseadressen ved å
 
 #### `FINN <merkelapp | adresse>`
 
-Skriv adressen til merkelappen til r0 og r1. Mest signifikante bit (msb) skrives til r1, og minst signifikante bit (msb) skrives til r0.
-Hvis addressen er `0xABC` blir dermed `r0` satt til `0xBC` og `r1` til `0x0A`.
+Skriv adressen til merkelappen til r0 og r1. Mest signifikante bit (msb) skrives til r1, og minst signifikante bit (lsb) skrives til r0.
+Hvis adressen er `0xABC` blir dermed `r0` satt til `0xBC` og `r1` til `0x0A`.
 
 #### `LAST rN`
 
-Skriv verdien fra addressen `((r1 << 8) | r0) & 0x0FFF` til registeret `rN`.
+Skriv verdien fra adressen `((r1 << 8) | r0) & 0x0FFF` til registeret `rN`.
 
 #### `LAGR rN`
 
-Skriv verdien i registeret rN til addressen `((r1 << 8) | r0) & 0x0FFF`.
+Skriv verdien i registeret rN til adressen `((r1 << 8) | r0) & 0x0FFF`.
     
 
 ### Data
 
-Man kan representere `data` ved å skrive linjer formen `^.DATA [x0-9a-fA-F, ]*$`. 
+Man kan representere `data` ved å skrive linjer på formen `^.DATA [x0-9a-fA-F, ]*$`. 
 For å skrive inn data (ev. instruksjonsbytes) bruker man altså ".DATA" etterfulgt av en komma-separert liste med tall. 
 Typisk vil man også putte en `merkelapp` rett før.
 
